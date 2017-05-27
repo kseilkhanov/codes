@@ -1,0 +1,62 @@
+    #include <iostream>
+    #include <cstdio>
+    const long long mm=5000000;
+    #define ll long long
+    using namespace std;
+ 
+    unsigned long long s[mm+5];
+    int lp[mm+5];
+ 
+    void prikalka()
+    {
+        for (int i=2;i<=mm;i+=2)
+            lp[i]=2;
+ 
+        for (int i=3;i<=3000;i+=2)
+        {
+         if (!lp[i])
+            for (int j=i*i;j<=mm;j+=(i<<1))
+                if (!lp[j])
+                    lp[j]=i;
+        }
+        s[1]=1;
+        for (int i=2;i<=mm;++i)
+        {
+            int j=lp[i];
+            if (j==0)
+            {
+                s[i]=s[i-1]+1ll*(i-1)*(i-1);
+                lp[i]=i;
+                continue;
+            }
+            int x=i;
+            int t=i;
+            while (t>1)
+            {
+                x=(x/j)*(j-1);
+           
+            while (t%j==0)
+                t/=j;
+ 
+            j=lp[t];
+            }
+ 
+            s[i]=s[i-1]+(1ll*x*x);
+        }
+    }
+ 
+    int main ()
+    {
+        prikalka();
+        int t,l,r;
+        scanf("%d" ,&t);
+ 
+ 
+        for (int i=0;i<t;i++)
+        {
+          scanf("%d %d" ,&l,&r);
+       
+          printf("Case %d: %llu\n", i + 1,s[r]-s[l-1]);
+        }
+ 
+}
