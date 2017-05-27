@@ -1,0 +1,50 @@
+#include <iostream>
+#include <conio.h>
+#include <cstdio>
+#define maxn 1000
+using namespace std;
+int p[maxn],y[maxn],x[maxn];
+int main ()
+{
+    int n,k;
+    scanf("%d %d" ,&n, &k);
+     
+    int pn=0;
+    for (int i=2;i*i<=k;i++)
+    {
+        if (k%i==0)
+        {
+           p[pn]=i;
+           while (k%i==0)
+           {
+             y[pn]++;
+             k/=i;
+           }
+    pn++;
+        }
+    }
+    if (k>1)
+    {
+        p[pn]=k;
+        y[pn++]=1;
+    }
+ 
+  for (int i=0;i<pn;i++)
+  {
+    int nn=n;
+    int cnt=0;
+    while (nn>=p[i])
+    {
+        cnt+=nn/p[i];
+        nn/=p[i];
+    }  
+    x[i]=cnt;
+  }
+  int m=2*1000000000;
+    for (int i=0;i<pn;i++)
+          m=min(m,x[i]/y[i]);
+        
+       cout<<m;
+ 
+ 
+}
